@@ -6,10 +6,6 @@ export class RecipeAppPage {
     return browser.get('/');
   }
 
-   pause(time) {
-     browser.pause(time);
-  }
-
   get title() {
     return browser.getTitle();
   }
@@ -18,7 +14,7 @@ export class RecipeAppPage {
     return element(by.css('a.navbar-brand'));
   }
 
-  get bannerTitleText() {
+  get bannerHeaderText() {
     return element(by.css('a.navbar-brand')).getText();
   }
 

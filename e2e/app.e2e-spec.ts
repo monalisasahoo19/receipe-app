@@ -9,43 +9,38 @@ describe('Given the Recipe Book App is opened', () => {
   let page: RecipeAppPage;
 
   beforeAll(() => {
-
     page = new RecipeAppPage();
     page.navigateTo();
 
   });
 
-  describe('When the page title is available', () => {
+  describe('When the Recipe page is available', () => {
 
-    it('Should display the browser title as "RecipeApp"', () => {
+    it('Should display the page title as "RecipeApp"', () => {
 
       expect(page.title).toEqual('RecipeApp');
 
     });
 
-  });
+    it('Should display the banner header as "Recipe Book"', () => {
 
-  describe('When the page header navigation is shown', () => {
-
-    it('Should display title as "Recipe Book"', () => {
-
-      expect(page.bannerTitleText).toEqual('Recipe Book');
+      expect(page.bannerHeaderText).toEqual('Recipe Book');
 
     });
 
-    it('Should display "Recipes" link', () => {
+    it('Should display "Recipes" tab', () => {
 
       expect(page.recipesLinkText).toEqual('Recipes');
 
     });
 
-    it('Should display "Shopping List" link', () => {
+    it('Should display "Shopping List" tab', () => {
 
       expect(page.shoppingListLinkText).toEqual('Shopping List');
 
     });
 
-    it('Should active/highlighted link text be "Recipes"', () => {
+    it('Should active/highlighted tab text as "Recipes"', () => {
 
       expect(page.bannerActiveLinkText).toEqual('Recipes');
 
@@ -62,7 +57,9 @@ describe('Given the Recipe Book App is opened', () => {
     });
 
     it('Should display "New Recipe" Button is disabled', () => {
+
       expect(page.newRecipeButton.getAttribute('disabled')).toBeTruthy();
+
     });
 
     it('Should display information panel with text "Please select a recipe from the list"', () => {
@@ -114,9 +111,7 @@ describe('Given the Recipe Book App is opened', () => {
 
     });
 
-
     describe('When click on the Recipe Item from the list', () => {
-
 
       let allRecipeItemElements: WebElement[] = [];
       beforeAll(() => {
@@ -129,46 +124,48 @@ describe('Given the Recipe Book App is opened', () => {
       Expected.Recipes.forEach((expectedRecipeItem, index) => {
 
         let recipeItem: RecipeItem;
-        let recipeParentElement: WebElement;
+        let recipeSelectedElement: WebElement;
 
         beforeAll(() => {
           recipeItem = allRecipeItems[index];
-          recipeParentElement = allRecipeItemElements[index];
+          recipeSelectedElement = allRecipeItemElements[index];
         });
 
         it(`Item #${index + 1} - Should display recipe title as ${ expectedRecipeItem.title }`, () => {
-          recipeParentElement.click();
+          recipeSelectedElement.click();
           expect(page.recipeDetailTitle).toEqual(expectedRecipeItem.title);
         });
 
         it(`Item #${index + 1} - Should display recipe description
          for ${ expectedRecipeItem.title } as ${ expectedRecipeItem.description }`, () => {
-          recipeParentElement.click();
+          recipeSelectedElement.click();
           expect(page.recipeDetailDescription).toEqual(expectedRecipeItem.description);
         });
 
         it(`Item #${index + 1} - Should display recipe for ${ expectedRecipeItem.title } Image as ${ expectedRecipeItem.image }`, () => {
-          recipeParentElement.click();
+          recipeSelectedElement.click();
           expect(page.recipeDetailImage).toContain(expectedRecipeItem.image);
         });
 
         it(`Item #${index + 1} - Should display Action Button for ${ expectedRecipeItem.title } as "Manage Recipes"`, () => {
-          recipeParentElement.click();
+          recipeSelectedElement.click();
           expect(page.recipeDetailManageActionText).toEqual('Manage Recipes');
         });
 
 
         it(`Item #${index + 1} - Should display recipe ingredient
         for ${ expectedRecipeItem.title } as ${ expectedRecipeItem.ingredients }`, () => {
-          recipeParentElement.click();
+
+          recipeSelectedElement.click();
           page.recipeDetailIngredients.each((ingredientElement, indexIngredient) => {
             expect(ingredientElement.getText()).toEqual(expectedRecipeItem.ingredients[indexIngredient]);
           });
+
         });
 
         it(`Item #${index + 1} - Should display recipe ingredient
         for ${ expectedRecipeItem.title } as ${ Expected.Actions }`, () => {
-          recipeParentElement.click();
+          recipeSelectedElement.click();
 
           page.recipeDetailManageAction.click();
 
